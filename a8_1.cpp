@@ -5,7 +5,8 @@
  Professor Dave
  Assignment 8.1
 
-
+Assignment calls for a Fraction class whose objects will represent Fractions. I provided member functions for add,
+subtracting, multiplying, and dividing fractions.
  */
 
 #include <iostream>
@@ -19,21 +20,21 @@ using namespace std;
 class Fraction
 {
 private:
-    // int's declared add to rest of program
     int numerator;
     int denominator;
+
 public:
     Fraction();
     Fraction(int a,int b);
     Fraction addedTo(Fraction f2);
     Fraction subtract(Fraction f2);
     Fraction multipliedBy(Fraction f2);
-    Fraction dividedBy(const Fraction& f2) const;
-    int get_num() const;
-    int get_den() const;
+    Fraction dividedBy(Fraction& f2);
+    int get_num();
+    int get_den();
     bool isEqualTo(Fraction f2);
-    void print() const;
-    void set(int a, int b);
+    void print();
+    void set(int isNumerator, int isDenominator);
 };
 
 
@@ -43,8 +44,8 @@ public:
 
 Fraction::Fraction()
 {
-    num = 0;
-    den = 1;
+    numerator = 0;
+    denominator = 1;
 }
 
 
@@ -55,17 +56,9 @@ Fraction::Fraction()
 
 Fraction::Fraction(int a, int b)
 {
-    int large = a>b?a:b;
-    num = a;
-    den = b;
-    int gcd= 1;
-    for(int i=large; i>=2; i--)
-    {
-        if(num%i==0 && den%i==0) {
-            gcd = i; break; }
-    }
-    num = num/gcd;
-    den = den/gcd;
+    //int large = a>b?a:b;
+    numerator = a;
+    denominator = b;
 }
 
 
@@ -75,8 +68,8 @@ Fraction::Fraction(int a, int b)
 
 Fraction Fraction::addedTo(Fraction f2)
 {
-    int new_num = num*f2.get_den() + den*f2.get_num();
-    int new_den = den*f2.get_den();
+    int new_num = numerator*f2.get_den() + denominator*f2.get_num();
+    int new_den = denominator*f2.get_den();
     return Fraction(new_num,new_den);
 }
 
@@ -87,8 +80,8 @@ Fraction Fraction::addedTo(Fraction f2)
 
 Fraction Fraction::subtract(Fraction f2)
 {
-    int new_num = num*f2.get_den() - den*f2.get_num();
-    int new_den = den*f2.get_den();
+    int new_num = numerator*f2.get_den() - denominator*f2.get_num();
+    int new_den = denominator*f2.get_den();
     return Fraction(new_num,new_den);
 }
 
@@ -99,8 +92,8 @@ Fraction Fraction::subtract(Fraction f2)
 
 Fraction Fraction::multipliedBy(Fraction f2)
 {
-    int new_num = num*f2.get_num();
-    int new_den = den*f2.get_den();
+    int new_num = numerator*f2.get_num();
+    int new_den = denominator*f2.get_den();
     return Fraction(new_num,new_den);
 }
 
@@ -109,7 +102,7 @@ Fraction Fraction::multipliedBy(Fraction f2)
 
 
 
-Fraction Fraction::dividedBy(const Fraction& f2) const
+Fraction Fraction::dividedBy(Fraction& f2)
 {
     int new_num = (this->get_num())*f2.get_den();
     int new_den = (this->get_den())*f2.get_num();
@@ -124,16 +117,7 @@ Fraction Fraction::dividedBy(const Fraction& f2) const
 
 bool Fraction::isEqualTo(Fraction f2)
 {
-    return (num==f2.get_num() && den == f2.get_den());
-}
-
-
-
-
-
-void set(int a, int b);
-{
-
+    return (numerator==f2.get_num() && denominator == f2.get_den());
 }
 
 
@@ -141,9 +125,9 @@ void set(int a, int b);
 
 
 
-void Fraction::print() const
+void Fraction::print()
 {
-    cout << num << "/" << den;
+    cout << numerator << "/" << denominator;
 }
 
 
@@ -151,9 +135,9 @@ void Fraction::print() const
 
 
 
-int Fraction::get_num() const
+int Fraction::get_num()
 {
-    return num;
+    return numerator;
 }
 
 
@@ -161,9 +145,20 @@ int Fraction::get_num() const
 
 
 
-int Fraction::get_den() const
+int Fraction::get_den()
 {
-    return den;
+    return denominator;
+}
+
+
+
+
+
+
+void Fraction::set(int isNumerator, int isDenominator)
+{
+    numerator = isNumerator;
+    denominator = isDenominator;
 }
 
 
@@ -228,3 +223,11 @@ int main()
 
 
 
+/*
+Output:
+The product of 9/8 and 2/3 is 18/24
+The quotient of 9/8 and 2/3 is 27/16
+The sum of 9/8 and 2/3 is 43/24
+The difference of 9/8 and 2/3 is 11/24
+The two Fractions are not equal.
+*/
